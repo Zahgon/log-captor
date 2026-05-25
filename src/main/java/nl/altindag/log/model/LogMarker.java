@@ -20,6 +20,7 @@ import java.util.List;
 public final class LogMarker {
 
     private final String name;
+
     private final List<LogMarker> references;
 
     public LogMarker(String name, List<LogMarker> references) {
@@ -28,18 +29,15 @@ public final class LogMarker {
     }
 
     public String getName() {
-        return name;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<LogMarker> getReferences() {
-        return references;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "LogMarker{" +
-                "name='" + name + '\'' +
-                ", references=" + references +
-                '}';
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

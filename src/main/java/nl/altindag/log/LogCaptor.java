@@ -26,7 +26,6 @@ import nl.altindag.log.util.AppenderUtils;
 import nl.altindag.log.util.JavaUtilLoggingLoggerUtils;
 import nl.altindag.log.util.LogbackUtils;
 import nl.altindag.log.util.Mappers;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +38,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
 import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
 /**
@@ -50,14 +48,16 @@ public final class LogCaptor implements AutoCloseable {
     private static final Map<String, Level> logLevelContainer = new ConcurrentHashMap<>();
 
     private final Logger logger;
+
     private final InMemoryAppender<ILoggingEvent> inMemoryAppender;
+
     private ConsoleAppender<ILoggingEvent> consoleAppender;
+
     private final List<ILoggingEvent> eventsCollector = new CopyOnWriteArrayList<>();
 
     private LogCaptor(String loggerName) {
         logger = LogbackUtils.getLogger(loggerName);
         inMemoryAppender = AppenderUtils.configureInMemoryAppender(logger, eventsCollector);
-
         JavaUtilLoggingLoggerUtils.redirectToSlf4j(loggerName);
         logLevelContainer.putIfAbsent(logger.getName(), logger.getEffectiveLevel());
     }
@@ -68,7 +68,7 @@ public final class LogCaptor implements AutoCloseable {
      * @return LogCaptor instance for the root logger
      */
     public static LogCaptor forRoot() {
-        return new LogCaptor(ROOT_LOGGER_NAME);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -78,7 +78,7 @@ public final class LogCaptor implements AutoCloseable {
      * @return LogCaptor instance for the provided class
      */
     public static LogCaptor forClass(Class<?> clazz) {
-        return new LogCaptor(clazz.getName());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -88,31 +88,31 @@ public final class LogCaptor implements AutoCloseable {
      * @return LogCaptor instance for the provided logger name
      */
     public static LogCaptor forName(String name) {
-        return new LogCaptor(name);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<String> getLogs() {
-        return getLogs(logEvent -> true, ILoggingEvent::getFormattedMessage);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<String> getInfoLogs() {
-        return getLogs(Level.INFO);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<String> getDebugLogs() {
-        return getLogs(Level.DEBUG);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<String> getWarnLogs() {
-        return getLogs(Level.WARN);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<String> getErrorLogs() {
-        return getLogs(Level.ERROR);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<String> getTraceLogs() {
-        return getLogs(Level.TRACE);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private List<String> getLogs(Level level) {
@@ -120,50 +120,45 @@ public final class LogCaptor implements AutoCloseable {
     }
 
     public List<LogEvent> getLogEvents() {
-        return getLogs(logEvent -> true, Mappers.toLogEvent());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private <T> List<T> getLogs(Predicate<ILoggingEvent> logEventPredicate, Function<ILoggingEvent, T> logEventMapper) {
         synchronized (eventsCollector) {
-            return eventsCollector.stream()
-                    .filter(logEventPredicate)
-                    .map(logEventMapper)
-                    .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+            return eventsCollector.stream().filter(logEventPredicate).map(logEventMapper).collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
         }
     }
 
     public boolean hasMessage(String message) {
-        return getLogs().stream().anyMatch(log -> log.contains(message));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public boolean hasInfoMessage(String message) {
-        return hasMessage(Level.INFO, message);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public boolean hasDebugMessage(String message) {
-        return hasMessage(Level.DEBUG, message);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public boolean hasWarnMessage(String message) {
-        return hasMessage(Level.WARN, message);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public boolean hasErrorMessage(String message) {
-        return hasMessage(Level.ERROR, message);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public boolean hasTraceMessage(String message) {
-        return hasMessage(Level.TRACE, message);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private boolean hasMessage(Level level, String message) {
-        return getLogs(logEvent -> logEvent.getLevel() == level, ILoggingEvent::getFormattedMessage).stream()
-                .anyMatch(log -> log.contains(message));
+        return getLogs(logEvent -> logEvent.getLevel() == level, ILoggingEvent::getFormattedMessage).stream().anyMatch(log -> log.contains(message));
     }
 
     public void addFilter(Filter<ILoggingEvent> filter) {
-        inMemoryAppender.addFilter(filter);
-        filter.start();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -174,7 +169,7 @@ public final class LogCaptor implements AutoCloseable {
      * This option will implicitly include the following log levels: WARN and ERROR
      */
     public void setLogLevelToInfo() {
-        logger.setLevel(Level.INFO);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -185,7 +180,7 @@ public final class LogCaptor implements AutoCloseable {
      * This option will implicitly include the following log levels: INFO, WARN and ERROR
      */
     public void setLogLevelToDebug() {
-        logger.setLevel(Level.DEBUG);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -196,7 +191,7 @@ public final class LogCaptor implements AutoCloseable {
      * This option will implicitly include the following log levels: INFO, DEBUG, WARN and ERROR
      */
     public void setLogLevelToTrace() {
-        logger.setLevel(Level.TRACE);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -205,7 +200,7 @@ public final class LogCaptor implements AutoCloseable {
      * To roll-back to the initial state use: {@link LogCaptor#resetLogLevel()}
      */
     public void disableLogs() {
-        logger.setLevel(Level.OFF);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -213,11 +208,7 @@ public final class LogCaptor implements AutoCloseable {
      * LogCaptor will still be capturing the log entries.
      */
     public void disableConsoleOutput() {
-        reconfigure();
-        logger.detachAppender(consoleAppender);
-        if (!ROOT_LOGGER_NAME.equals(logger.getName())) {
-            logger.setAdditive(false);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -225,15 +216,15 @@ public final class LogCaptor implements AutoCloseable {
      * they are disabled earlier by {@link LogCaptor#disableConsoleOutput()}
      */
     public void enableConsoleOutput() {
-        reconfigure();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     Logger getRootLogger() {
-        return logger.getLoggerContext().getLogger(ROOT_LOGGER_NAME);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     Logger getLogger() {
-        return logger;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -241,53 +232,24 @@ public final class LogCaptor implements AutoCloseable {
      * changing it with {@link LogCaptor#setLogLevelToInfo()}, {@link LogCaptor#setLogLevelToDebug()} or with {@link LogCaptor#setLogLevelToTrace()}
      */
     public void resetLogLevel() {
-        Optional.ofNullable(logLevelContainer.get(logger.getName()))
-                .ifPresent(logger::setLevel);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public void clearLogs() {
-        eventsCollector.clear();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public void reconfigure() {
-        consoleAppender = AppenderUtils.createConsoleAppender(logger, consoleAppender);
-
-        StreamSupport.stream(Spliterators.spliteratorUnknownSize(logger.iteratorForAppenders(), Spliterator.ORDERED), false)
-                .filter(appender -> appender instanceof ConsoleAppender || appender instanceof InMemoryAppender)
-                .forEach(logger::detachAppender);
-
-        logger.addAppender(inMemoryAppender);
-
-        boolean isRootLogger = ROOT_LOGGER_NAME.equals(logger.getName());
-        Optional<ConsoleAppender<ILoggingEvent>> rootConsoleAppender = AppenderUtils.getConsoleAppender(getRootLogger());
-        if (!isRootLogger && rootConsoleAppender.isPresent()) {
-            logger.setAdditive(true);
-        }
-
-        if (!isRootLogger && !rootConsoleAppender.isPresent()) {
-            logger.addAppender(consoleAppender);
-        }
-
-        if (isRootLogger) {
-            logger.addAppender(consoleAppender);
-        }
-
-        inMemoryAppender.start();
-        consoleAppender.start();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void close() {
-        logger.detachAppender(inMemoryAppender);
-        inMemoryAppender.stop();
-        if (!ROOT_LOGGER_NAME.equals(logger.getName())) {
-            logger.setAdditive(true);
-            logger.detachAppender(consoleAppender);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "LogCaptor(loggerName=" + logger.getName() + ")";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -27,29 +27,28 @@ import java.util.Optional;
 public final class LogEvent {
 
     private final String message;
+
     private final String formattedMessage;
+
     private final String level;
+
     private final String loggerName;
+
     private final String threadName;
+
     private final ZonedDateTime timeStamp;
+
     private final List<Object> arguments;
+
     private final Throwable throwable;
+
     private final Map<String, String> diagnosticContext;
+
     private final List<Map.Entry<String, Object>> keyValuePairs;
+
     private final List<LogMarker> logMarkers;
 
-    public LogEvent(String message,
-                    String formattedMessage,
-                    String level,
-                    String loggerName,
-                    String threadName,
-                    ZonedDateTime timeStamp,
-                    List<Object> arguments,
-                    Throwable throwable,
-                    Map<String, String> diagnosticContext,
-                    List<Map.Entry<String, Object>> keyValuePairs,
-                    List<LogMarker> logMarkers) {
-
+    public LogEvent(String message, String formattedMessage, String level, String loggerName, String threadName, ZonedDateTime timeStamp, List<Object> arguments, Throwable throwable, Map<String, String> diagnosticContext, List<Map.Entry<String, Object>> keyValuePairs, List<LogMarker> logMarkers) {
         this.message = Objects.requireNonNull(message);
         this.formattedMessage = Objects.requireNonNull(formattedMessage);
         this.level = Objects.requireNonNull(level);
@@ -64,64 +63,51 @@ public final class LogEvent {
     }
 
     public String getMessage() {
-        return message;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public String getFormattedMessage() {
-        return formattedMessage;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public String getLevel() {
-        return level;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public String getLoggerName() {
-        return loggerName;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public String getThreadName() {
-        return threadName;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public ZonedDateTime getTimeStamp() {
-        return timeStamp;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<Object> getArguments() {
-        return arguments;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<Throwable> getThrowable() {
-        return Optional.ofNullable(throwable);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Map<String, String> getDiagnosticContext() {
-        return diagnosticContext;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<Map.Entry<String, Object>> getKeyValuePairs() {
-        return keyValuePairs;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<LogMarker> getMarkers() {
-        return logMarkers;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "LogEvent{" +
-                "message='" + message + '\'' +
-                ", formattedMessage='" + formattedMessage + '\'' +
-                ", level='" + level + '\'' +
-                ", loggerName='" + loggerName + '\'' +
-                ", threadName='" + threadName + '\'' +
-                ", timeStamp='" + timeStamp + '\'' +
-                ", arguments=" + arguments +
-                ", throwable='" + getThrowable().map(Objects::toString).orElse("") + '\'' +
-                ", diagnosticContext=" + diagnosticContext +
-                ", keyValuePairs=" + keyValuePairs +
-                ", markers=" + logMarkers +
-                '}';
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

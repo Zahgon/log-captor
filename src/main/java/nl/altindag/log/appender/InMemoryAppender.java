@@ -16,7 +16,6 @@
 package nl.altindag.log.appender;
 
 import ch.qos.logback.core.AppenderBase;
-
 import java.util.List;
 
 /**
@@ -36,7 +35,6 @@ public final class InMemoryAppender<T> extends AppenderBase<T> {
 
     @Override
     protected void append(T t) {
-        eventsCollector.add(t);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

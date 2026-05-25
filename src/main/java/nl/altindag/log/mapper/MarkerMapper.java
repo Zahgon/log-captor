@@ -17,7 +17,6 @@ package nl.altindag.log.mapper;
 
 import nl.altindag.log.model.LogMarker;
 import org.slf4j.Marker;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -34,25 +33,15 @@ public final class MarkerMapper implements Function<Marker, LogMarker> {
 
     private static final MarkerMapper INSTANCE = new MarkerMapper();
 
-    private MarkerMapper() {}
+    private MarkerMapper() {
+    }
 
     @Override
     public LogMarker apply(Marker marker) {
-        String name = marker.getName();
-        List<LogMarker> innerLogMarkers = new ArrayList<>();
-
-        if (marker.hasReferences()) {
-            Iterator<Marker> iterator = marker.iterator();
-            while (iterator.hasNext()) {
-                LogMarker innerLogMarker = apply(iterator.next());
-                innerLogMarkers.add(innerLogMarker);
-            }
-        }
-
-        return new LogMarker(name, Collections.unmodifiableList(innerLogMarkers));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static MarkerMapper getInstance() {
-        return INSTANCE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

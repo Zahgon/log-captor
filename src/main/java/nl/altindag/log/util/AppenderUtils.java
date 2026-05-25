@@ -22,13 +22,11 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.encoder.Encoder;
 import nl.altindag.log.appender.InMemoryAppender;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.StreamSupport;
-
 import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
 /**
@@ -37,54 +35,35 @@ import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 public final class AppenderUtils {
 
     public static final String CONSOLE_APPENDER_NAME = "console";
+
     public static final String IN_MEMORY_APPENDER_NAME = "logcaptor-in-memory-appender";
+
     private static final String DEFAULT_LOG_PATTERN = "%d{yyyy-MM-dd HH:mm:ss.SSSXXX} %-5level [%thread] %logger{36} - %msg%n";
 
-    private AppenderUtils() {}
+    private AppenderUtils() {
+    }
 
     public static ConsoleAppender<ILoggingEvent> createConsoleAppender(LoggerContext loggerContext) {
-        Encoder<ILoggingEvent> encoder = createEncoder(loggerContext);
-        ConsoleAppender<ILoggingEvent> consoleAppender = new ConsoleAppender<>();
-        consoleAppender.setContext(loggerContext);
-        consoleAppender.setName(CONSOLE_APPENDER_NAME);
-        consoleAppender.setImmediateFlush(true);
-        consoleAppender.setEncoder(encoder);
-        consoleAppender.start();
-        return consoleAppender;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Encoder<ILoggingEvent> createEncoder(LoggerContext loggerContext) {
-        PatternLayoutEncoder encoder = new PatternLayoutEncoder();
-        encoder.setContext(loggerContext);
-        encoder.setPattern(DEFAULT_LOG_PATTERN);
-        encoder.start();
-        return encoder;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Optional<ConsoleAppender<ILoggingEvent>> getConsoleAppender(Logger logger) {
-        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(logger.iteratorForAppenders(), Spliterator.ORDERED), false)
-                .filter(appender -> appender instanceof ConsoleAppender)
-                .map(consoleAppender -> (ConsoleAppender<ILoggingEvent>) consoleAppender)
-                .findFirst();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static InMemoryAppender<ILoggingEvent> configureInMemoryAppender(Logger logger, List<ILoggingEvent> eventsCollector) {
-        InMemoryAppender<ILoggingEvent> inMemoryAppender = new InMemoryAppender<>(AppenderUtils.IN_MEMORY_APPENDER_NAME, eventsCollector);
-        inMemoryAppender.setContext(logger.getLoggerContext());
-        inMemoryAppender.start();
-        logger.addAppender(inMemoryAppender);
-        return inMemoryAppender;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static ConsoleAppender<ILoggingEvent> createConsoleAppender(Logger logger, ConsoleAppender<ILoggingEvent> consoleAppender) {
-        return Optional.ofNullable(consoleAppender)
-                .orElseGet(() -> AppenderUtils.getConsoleAppender(getRootLogger(logger))
-                .orElseGet(() -> AppenderUtils.getConsoleAppender(logger)
-                .orElseGet(() -> AppenderUtils.createConsoleAppender(logger.getLoggerContext()))));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static Logger getRootLogger(Logger logger) {
         return logger.getLoggerContext().getLogger(ROOT_LOGGER_NAME);
     }
-
 }

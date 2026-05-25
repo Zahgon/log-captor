@@ -16,7 +16,6 @@
 package nl.altindag.log.util;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
-
 import java.util.logging.Logger;
 
 /**
@@ -25,18 +24,13 @@ import java.util.logging.Logger;
 public final class JavaUtilLoggingLoggerUtils {
 
     private static final String JAVA_UTIL_LOGGING_ROOT_LOGGER_NAME = "";
+
     private static final String SLF4J_ROOT_LOGGER_NAME = org.slf4j.Logger.ROOT_LOGGER_NAME;
 
-    private JavaUtilLoggingLoggerUtils() {}
-
-    public static void redirectToSlf4j(String loggerName) {
-        if (!SLF4JBridgeHandler.isInstalled()) {
-            SLF4JBridgeHandler.removeHandlersForRootLogger();
-            SLF4JBridgeHandler.install();
-        }
-
-        String loggerNameForJul = SLF4J_ROOT_LOGGER_NAME.equals(loggerName) ? JAVA_UTIL_LOGGING_ROOT_LOGGER_NAME : loggerName;
-        Logger.getLogger(loggerNameForJul).setLevel(java.util.logging.Level.ALL);
+    private JavaUtilLoggingLoggerUtils() {
     }
 
+    public static void redirectToSlf4j(String loggerName) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

@@ -18,7 +18,6 @@ package nl.altindag.log.util;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import nl.altindag.log.mapper.LogEventMapper;
 import nl.altindag.log.model.LogEvent;
-
 import java.util.function.Function;
 
 /**
@@ -26,10 +25,10 @@ import java.util.function.Function;
  */
 public final class Mappers {
 
-    private Mappers() {}
-
-    public static Function<ILoggingEvent, LogEvent> toLogEvent() {
-        return LogEventMapper.getInstance();
+    private Mappers() {
     }
 
+    public static Function<ILoggingEvent, LogEvent> toLogEvent() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

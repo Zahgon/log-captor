@@ -18,7 +18,6 @@ package nl.altindag.log.util;
 import nl.altindag.log.exception.LogCaptorException;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.SubstituteLogger;
-
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
@@ -34,24 +33,22 @@ import java.util.regex.Pattern;
 public final class LogbackUtils {
 
     private static final int DEFAULT_POLL_COUNTER_LIMIT = 10;
+
     private static final int DEFAULT_POLL_DELAY_MILLISECONDS = 100;
+
     private static final Pattern IS_NUMBER_PATTERN = Pattern.compile("^\\d+$");
-    private static final BiFunction<String, Integer, Integer> INT_SYSTEM_PROPERTY_PROVIDER = (propertyName, defaultValue) -> Optional.ofNullable(System.getProperty(propertyName))
-        .map(String::trim)
-        .filter(value -> !value.isEmpty())
-        .filter(value -> IS_NUMBER_PATTERN.matcher(value).matches())
-        .map(Integer::parseInt)
-        .orElse(defaultValue);
+
+    private static final BiFunction<String, Integer, Integer> INT_SYSTEM_PROPERTY_PROVIDER = (propertyName, defaultValue) -> Optional.ofNullable(System.getProperty(propertyName)).map(String::trim).filter(value -> !value.isEmpty()).filter(value -> IS_NUMBER_PATTERN.matcher(value).matches()).map(Integer::parseInt).orElse(defaultValue);
 
     private static final IntSupplier POLL_COUNTER_LIMIT = () -> INT_SYSTEM_PROPERTY_PROVIDER.apply("logcaptor.poll-counter-limit", DEFAULT_POLL_COUNTER_LIMIT);
+
     private static final IntSupplier POLL_DELAY_MILLISECONDS = () -> INT_SYSTEM_PROPERTY_PROVIDER.apply("logcaptor.poll-delay-milliseconds", DEFAULT_POLL_DELAY_MILLISECONDS);
 
-    private LogbackUtils() {}
+    private LogbackUtils() {
+    }
 
     public static ch.qos.logback.classic.Logger getLogger(String loggerName) {
-        org.slf4j.Logger slf4jLogger = getSlf4jLogger(loggerName);
-        ValidationUtils.requireLoggerOfType(slf4jLogger, ch.qos.logback.classic.Logger.class);
-        return (ch.qos.logback.classic.Logger) slf4jLogger;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -64,14 +61,11 @@ public final class LogbackUtils {
     private static org.slf4j.Logger getSlf4jLogger(String loggerName) {
         int retryCounter = 0;
         org.slf4j.Logger slf4jLogger = LoggerFactory.getLogger(loggerName);
-
         if (!(slf4jLogger instanceof SubstituteLogger)) {
             return slf4jLogger;
         }
-
         int pollCounterLimit = POLL_COUNTER_LIMIT.getAsInt();
         int pollDelayMilliseconds = POLL_DELAY_MILLISECONDS.getAsInt();
-
         while (slf4jLogger instanceof SubstituteLogger && retryCounter++ < pollCounterLimit) {
             try {
                 TimeUnit.MILLISECONDS.sleep(pollDelayMilliseconds);
@@ -81,8 +75,6 @@ public final class LogbackUtils {
                 throw new LogCaptorException(e);
             }
         }
-
         return slf4jLogger;
     }
-
 }

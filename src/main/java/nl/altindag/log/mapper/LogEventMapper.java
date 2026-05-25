@@ -19,7 +19,6 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.ThrowableProxy;
 import nl.altindag.log.model.LogEvent;
 import nl.altindag.log.model.LogMarker;
-
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -42,74 +41,37 @@ public final class LogEventMapper implements Function<ILoggingEvent, LogEvent> {
 
     private static final LogEventMapper INSTANCE = new LogEventMapper();
 
-    private LogEventMapper() {}
+    private LogEventMapper() {
+    }
 
     @Override
     public LogEvent apply(ILoggingEvent iLoggingEvent) {
-        String message = iLoggingEvent.getMessage();
-        String formattedMessage = iLoggingEvent.getFormattedMessage();
-        String level = iLoggingEvent.getLevel().toString();
-        String loggerName = iLoggingEvent.getLoggerName();
-        String threadName = iLoggingEvent.getThreadName();
-        ZonedDateTime timeStamp = ZonedDateTime.ofInstant(Instant.ofEpochMilli(iLoggingEvent.getTimeStamp()), ZoneOffset.UTC);
-        Map<String, String> diagnosticContext = Collections.unmodifiableMap(iLoggingEvent.getMDCPropertyMap());
-        List<Map.Entry<String, Object>> keyValuePairs = mapKeyValuePairs(iLoggingEvent);
-        List<Object> arguments = mapArguments(iLoggingEvent);
-        Throwable throwable = mapThrowable(iLoggingEvent);
-        List<LogMarker> logMarkers = mapMarkers(iLoggingEvent);
-
-        return new LogEvent(
-                message,
-                formattedMessage,
-                level,
-                loggerName,
-                threadName,
-                timeStamp,
-                arguments,
-                throwable,
-                diagnosticContext,
-                keyValuePairs,
-                logMarkers
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static List<Map.Entry<String, Object>> mapKeyValuePairs(ILoggingEvent iLoggingEvent) {
         if (iLoggingEvent.getKeyValuePairs() == null) {
             return Collections.emptyList();
         }
-
-        return iLoggingEvent.getKeyValuePairs().stream()
-                .map(keyValuePair -> new SimpleImmutableEntry<>(keyValuePair.key, keyValuePair.value))
-                .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+        return iLoggingEvent.getKeyValuePairs().stream().map(keyValuePair -> new SimpleImmutableEntry<>(keyValuePair.key, keyValuePair.value)).collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
     }
 
     private static Throwable mapThrowable(ILoggingEvent iLoggingEvent) {
-        return Optional.ofNullable(iLoggingEvent.getThrowableProxy())
-                .filter(ThrowableProxy.class::isInstance)
-                .map(ThrowableProxy.class::cast)
-                .map(ThrowableProxy::getThrowable)
-                .orElse(null);
+        return Optional.ofNullable(iLoggingEvent.getThrowableProxy()).filter(ThrowableProxy.class::isInstance).map(ThrowableProxy.class::cast).map(ThrowableProxy::getThrowable).orElse(null);
     }
 
     private static List<Object> mapArguments(ILoggingEvent iLoggingEvent) {
-        return Optional.ofNullable(iLoggingEvent.getArgumentArray())
-                .map(Arrays::asList)
-                .map(Collections::unmodifiableList)
-                .orElseGet(Collections::emptyList);
+        return Optional.ofNullable(iLoggingEvent.getArgumentArray()).map(Arrays::asList).map(Collections::unmodifiableList).orElseGet(Collections::emptyList);
     }
 
     private static List<LogMarker> mapMarkers(ILoggingEvent iLoggingEvent) {
         if (iLoggingEvent.getMarkerList() == null) {
             return Collections.emptyList();
         }
-
-        return iLoggingEvent.getMarkerList().stream()
-                .map(MarkerMapper.getInstance())
-                .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+        return iLoggingEvent.getMarkerList().stream().map(MarkerMapper.getInstance()).collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
     }
 
     public static LogEventMapper getInstance() {
-        return INSTANCE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }
